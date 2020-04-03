@@ -1,7 +1,7 @@
 #!/bin/bash
 api_token=$CF_API_TOKEN
-zone=$CF_ZONE_NAME
-domain=$CF_RECORD_NAME
+zone_name=$CF_ZONE_NAME
+record_name=$CF_RECORD_NAME
 
 # get your external ip v4 address
 ip_addr=`dig -4 TXT +short o-o.myaddr.1.google.com @ns1.google.com`
@@ -15,11 +15,11 @@ if [ `echo $zones_json | jq -r '.success'` == 'false' ];then
     exit 1
 fi
 
-zone_id=`echo $zones_json | jq -r ".result[] | select(.name==\"$zone\") | .id"`
+zone_id=`echo $zones_json | jq -r ".result[] | select(.name==\"$zone_name\") | .id"`
 if [ $zone_id ]; then
-    echo zone id: $zone $zone_id
+    echo zone id: $zone_name $zone_id
 else
-    echo "zone '$zone' not found"
+    echo "zone '$zone_name' not found"
     exit 1
 fi
 
@@ -32,12 +32,12 @@ if [ `echo $dns_records | jq -r '.success'` == 'false' ];then
     exit 1
 fi
 
-record_id=`echo $dns_records | jq -r ".result[] | select(.name == \"$domain\") | .id"`
+record_id=`echo $dns_records | jq -r ".result[] | select(.name == \"$record_name\") | .id"`
 if [ $record_id ]; then
-    echo record id: $domain $record_id
+    echo record id: $record_name $record_id
     echo update record
 else
-    echo "domain '$domain' not found"
+    echo "record for '$record_name' not found"
     echo create record
 fi
 
@@ -46,7 +46,7 @@ fi
 update_query=" \
 { \
     \"type\": \"A\", \
-    \"name\": \"$domain\", \
+    \"name\": \"$record_name\", \
     \"content\": $ip_addr, \
     \"ttl\": 1 \
 }"
@@ -60,6 +60,8 @@ update_result=`curl -s https://api.cloudflare.com/client/v4/zones/$zone_id/dns_r
 
 if [ `echo $update_result | jq -r '.success'` == 'true' ];then
     echo 'completed'
+    exit 0
 else
     echo 'error'
+    exit 1
 fi
