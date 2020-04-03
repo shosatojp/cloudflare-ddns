@@ -1,5 +1,7 @@
 # CloudFlare DDNS Shell Script
 
+update a record with your external ip v4 address, create if not exists.
+
 ## Dependencies
 
 * `dig`
@@ -11,7 +13,8 @@
 set following environment variables
 
 ```sh
-# need following permissions: Zone.Zone, Zone.DNS
+# need following permissions: Zone.Zone.Read, Zone.DNS.Edit
+# top right corner > My Profile > API Tokens > Create Token
 export CF_API_TOKEN=AAAAABBBBBCCCCCDDDDDEEEEEFFFFF
 export CF_ZONE_NAME=shosato.jp
 export CF_RECORD_NAME=mail.shosato.jp
