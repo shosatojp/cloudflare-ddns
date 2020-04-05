@@ -17,7 +17,7 @@ set following environment variables
 # top right corner > My Profile > API Tokens > Create Token
 export CF_API_TOKEN=AAAAABBBBBCCCCCDDDDDEEEEEFFFFF
 export CF_ZONE_NAME=shosato.jp
-export CF_RECORD_NAME=mail.shosato.jp
+# export CF_RECORD_NAME=mail.shosato.jp
 ```
 
 
@@ -29,6 +29,6 @@ use cron to update ip address regularly
 crontab -e
 
 # append this to update every hour
-0 */1 * * * /**/**/cloudflare-ddns/cfddns.sh
+0 */1 * * * CF_RECORD_NAME=mail.shosato.jp /bin/bash -l /**/**/cloudflare-ddns/cfddns.sh
 ```
 
