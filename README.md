@@ -29,6 +29,6 @@ use cron to update ip address regularly
 crontab -e
 
 # append this to update every hour
-0 */1 * * * CF_RECORD_NAME=mail.shosato.jp /bin/bash -l /**/**/cloudflare-ddns/cfddns.sh
+*/1 * * * * CF_RECORD_NAME=mail.shosato.jp /bin/bash -l /**/**/cloudflare-ddns/cfddns.sh
 ```
 
