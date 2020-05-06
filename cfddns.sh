@@ -3,6 +3,8 @@ api_token=$CF_API_TOKEN
 zone_name=$CF_ZONE_NAME
 record_name=$CF_RECORD_NAME
 
+echo `date`
+
 # get your external ip v4 address
 ip_addr=`dig -4 TXT +short o-o.myaddr.1.google.com @ns1.google.com`
 
