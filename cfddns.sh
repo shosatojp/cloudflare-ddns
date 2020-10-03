@@ -64,6 +64,6 @@ if [ `echo $update_result | jq -r '.success'` == 'true' ];then
     echo 'completed'
     exit 0
 else
-    echo 'error'
+    echo 'error:' $update_result
     exit 1
 fi
